@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <title>注册</title>
+    <link href="assets/libs/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/quick-website.css" id="stylesheet" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    <link href="register.css" rel="stylesheet">
+</head>
+<body>
+<div class="container d-flex flex-column animate__animated animate__fadeIn">
+    <div class="row align-items-center justify-content-center min-vh-100">
+        <div class="col-md-6 col-lg-5 col-xl-5 py-6 py-md-0">
+            <div class="card shadow zindex-100 mb-0">
+                <div class="card-body px-md-5 py-5">
+                    <div class="mb-5">
+                        <h6 class="h3" style="text-align: center">用户注册</h6>
+                        <p class="text-muted mb-0" style="text-align: center">注册一个新的学生用户</p>
+                    </div>
+                    <span class="clearfix"></span>
+                    <form>
+                        <div class="form-group mt-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i data-feather="user"></i></span>
+                                </div>
+                                <input class="form-control" maxlength="10" minlength="5"
+                                       name="reg_account" onKeyUp="value=value.replace(/[\W]/g,'')"
+                                       placeholder="由字母、数字组成的5-10位账号" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i data-feather="key"></i></span>
+                                </div>
+                                <input class="form-control" maxlength="20" minlength="8"
+                                       name="reg_password"
+                                       placeholder="8-20位密码" type="password">
+                                <div class="input-group-append" data-placement="top" data-toggle="tooltip"
+                                     title="由字母、符号、数字组成，符号包含!@#$%^&*">
+                                    <span class="input-group-text"><i data-feather="help-circle"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i data-feather="key"></i></span>
+                                </div>
+                                <input class="form-control" maxlength="20" minlength="8"
+                                       name="reg_check_password"
+                                       placeholder="再输一次密码" type="password">
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i data-feather="user"></i></span>
+                                </div>
+                                <input class="form-control" maxlength="20" name="names"
+                                       placeholder="输入您的姓名" type="text">
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <div class="input-group">
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input checked class="custom-control-input" id="boy"
+                                           name="customRadioInline1" type="radio">
+                                    <label class="custom-control-label" for="boy">男</label>
+                                </div>
+                                <div class="custom-control custom-radio custom-control-inline">
+                                    <input class="custom-control-input" id="girl" name="customRadioInline1"
+                                           type="radio">
+                                    <label class="custom-control-label" for="girl">女</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input class="btn btn-block btn-primary" id="logging" name="register" onclick="clickOn()"
+                                   style="display: block" type="button" value="注册">
+                        </div>
+                        <div class="mt-4">
+                            <button class="btn btn-block btn-primary" disabled id="loading"
+                                    name="login" style="display: none" type="submit">
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-secondary" role="status">
+                                        <span class="sr-only">跳转中...</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="info"></div>
+                </div>
+                <div class="card-footer px-md-5">
+                    <a href="login.html"><i data-feather="arrow-left-circle"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/libs/svg-injector/dist/svg-injector.min.js"></script>
+<script src="assets/libs/feather-icons/dist/feather.min.js"></script>
+<script src="assets/js/quick-website.js"></script>
+<!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    })
+
+    function clickOn() {
+        var info = document.getElementById("info");
+        var account = $("input[name='reg_account']").val();
+        var password = $("input[name='reg_password']").val();
+        var check_password = $("input[name='reg_check_password']").val();
+        var names = $("input[name='names']").val();
+        const selectGenderTags = document.querySelector('input[name="customRadioInline1"]:checked').id;
+        var logging = document.getElementById("logging");
+        var loading = document.getElementById("loading");
+        logging.style.display = "none";
+        loading.style.display = "block";
+        info.style.display = "none";
+        $.ajax({
+            url: "bs_register.php",
+            type: "POST",
+            data: {
+                account: account,
+                password: password,
+                check_password: check_password,
+                name: names,
+                selectGenderTags: selectGenderTags
+            },
+            success: function (data) {
+                //再次判断前清除上一个样式，否会会继承上一个样式
+                if (info.classList.contains('alert-success')) {
+                    info.classList.remove('alert-success');
+                }
+                if (info.classList.contains('alert-danger')) {
+                    info.classList.remove('alert-danger');
+                }
+                if (info.classList.contains('alert-warning')) {
+                    info.classList.remove('alert-warning');
+                }
+                //赋予初始化样式
+                var status = data.status;
+                var message = data.message;
+                info.classList.add('mt-4');
+                info.classList.add('alert');
+                info.classList.add('animate__animated');
+                info.classList.add('animate__fadeInUp');
+                info.style.textAlign = 'center';
+                info.style.display = 'block';
+                info.ariaRoleDescription = 'alert';
+                //根据返回的状态码判断
+                if (status === 'success') {
+                    info.classList.add('alert-success');
+                    info.innerHTML = message;
+                    setTimeout(function () {
+                        window.location.href = "login.html";
+                    }, 2000);
+                } else if (status === 'error') {
+                    loading.style.display = "none";
+                    logging.style.display = "block";
+                    info.classList.add('alert-danger');
+                    info.innerHTML = message;
+                } else if (status === 'warning') {
+                    loading.style.display = "none";
+                    logging.style.display = "block";
+                    info.classList.add('alert-warning');
+                    info.innerHTML = message;
+                } else {
+                    loading.style.display = "none";
+                    logging.style.display = "block";
+                    info.classList.add('alert-danger');
+                    info.innerHTML = '未知错误';
+                }
+            }
+        });
+
+    }
+</script>
+</body>
+</html>

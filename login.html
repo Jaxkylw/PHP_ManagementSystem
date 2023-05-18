@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="zh-CN" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link href="assets/libs/@fortawesome/fontawesome-free/css/all.min.css" rel="stylesheet">
+    <link href="assets/css/quick-website.css" id="stylesheet" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet"/>
+    <link href="login.css" rel="stylesheet">
+</head>
+<body>
+<div class="container d-flex flex-column animate__animated animate__fadeIn">
+    <div class="row align-items-center justify-content-center min-vh-100">
+        <div class="col-md-6 col-lg-5 col-xl-5 py-6 py-md-0">
+            <div class="card shadow zindex-100 mb-0">
+                <div class="card-body px-md-5 py-5">
+                    <div class="mb-5">
+                        <h6 class="h3" style="text-align: center">登录</h6>
+                        <p class="text-muted mb-0" style="text-align: center">登录您的账户以继续</p>
+                    </div>
+                    <span class="clearfix"></span>
+                    <form>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i data-feather="user"></i></span>
+                                </div>
+                                <input class="form-control" maxlength="12" name="account" placeholder="账户"
+                                       type="text">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text"><i data-feather="key"></i></span>
+                                </div>
+                                <input class="form-control" maxlength="20" name="password" placeholder="密码"
+                                       type="password">
+                            </div>
+                        </div>
+                        <div class="form-group mt-4">
+                            <div class="input-group">
+                                <div class="btn-group btn-group-toggle" data-toggle="buttons" style="width: 100%;">
+                                    <label class="btn btn-primary">
+                                        <input checked id="student" name="options" type="radio">学生端
+                                    </label>
+                                    <label class="btn btn-primary">
+                                        <input id="teacher" name="options" type="radio">教师端
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mt-4">
+                            <input class="btn btn-block btn-primary" id="logging" name="login" onclick="clickOn()"
+                                   style="display: block" type="button" value="登录">
+                        </div>
+                        <div class="mt-4">
+                            <button class="btn btn-block btn-primary" disabled id="loading"
+                                    name="login" style="display: none" type="submit">
+                                <div class="d-flex justify-content-center">
+                                    <div class="spinner-border text-secondary" role="status">
+                                        <span class="sr-only">登陆中...</span>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
+                    </form>
+                    <div id="info"></div>
+                </div>
+                <div class="card-footer px-md-5"><small>还没有账户？</small>
+                    <a href="register.html"><i data-feather="arrow-right-circle"></i></a>
+                    <a href="login_admin.html" style="float: right"><i data-feather="users"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="assets/libs/jquery/dist/jquery.min.js"></script>
+<script src="assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script src="assets/libs/svg-injector/dist/svg-injector.min.js"></script>
+<script src="assets/libs/feather-icons/dist/feather.min.js"></script>
+<script src="assets/js/quick-website.js"></script>
+<!--<script src="bootstrap/js/bootstrap.min.js"></script>-->
+<script>
+    feather.replace({
+        'width': '1em',
+        'height': '1em'
+    })
+
+    function clickOn() {
+        <!--获取被选中的输入框的id值-->
+        const selectTags = document.querySelector('input[name="options"]:checked').id;
+        <!--end-->
+        var info = document.getElementById('info');
+        var logging = document.getElementById('logging');
+        var loading = document.getElementById('loading');
+        logging.style.display = 'none';
+        loading.style.display = 'block';
+        info.style.display = 'none';
+        $.ajax({
+            url: 'bs_login.php',
+            type: 'post',
+            data: {
+                account: $('input[name="account"]').val(),
+                password: $('input[name="password"]').val(),
+                permission: selectTags
+            },
+            success: function (data) {
+                //再次判断前清除上一个样式，否会会继承上一个样式
+                if (info.classList.contains('alert-success')) {
+                    info.classList.remove('alert-success');
+                }
+                if (info.classList.contains('alert-danger')) {
+                    info.classList.remove('alert-danger');
+                }
+                if (info.classList.contains('alert-warning')) {
+                    info.classList.remove('alert-warning');
+                }
+                //赋予初始化样式
+                var status = data.status;
+                var message = data.message;
+                info.classList.add('mt-4');
+                info.classList.add('alert');
+                info.classList.add('animate__animated');
+                info.classList.add('animate__fadeInUp');
+                info.style.textAlign = 'center';
+                info.style.display = 'block';
+                info.ariaRoleDescription = 'alert';
+                //判断状态
+                if (status === 'success') {
+                    info.classList.add('alert-success');
+                    info.innerHTML = message;
+                    setTimeout(function () {
+                        if (data.permission === 'teacher')
+                            window.location.href = 'teacher.php';
+                        else if (data.permission === 'student')
+                            window.location.href = 'student1.php';
+                    }, 2000);
+                } else if (status === 'error') {
+                    loading.style.display = 'none';
+                    logging.style.display = 'block';
+                    info.classList.add('alert-danger');
+                    info.innerHTML = message;
+                } else if (status === 'warning') {
+                    loading.style.display = 'none';
+                    logging.style.display = 'block';
+                    info.classList.add('alert-warning');
+                    info.innerHTML = message;
+                } else {
+                    loading.style.display = 'none';
+                    logging.style.display = 'block';
+                    info.classList.add('alert-danger');
+                    info.innerHTML = '未知错误';
+                }
+            }
+        })
+    }
+</script>
+</body>
+</html>
