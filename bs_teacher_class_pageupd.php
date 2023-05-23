@@ -9,9 +9,11 @@ $updid = $_POST['updid'];
 $text_regular = '/^([1-9]\d?|0|100)(\.\d{1,2})?$/';
 if (preg_match($text_regular, $text)) {
     connect_mysql()->query("UPDATE `php_sms`.gradestable SET `student_achievement` = '$text' WHERE `subject_code` = '$bsSubjectCode' AND `student_uid` = '$updid'");
+    $achievement = connect_mysql()->query("SELECT `student_achievement` FROM `php_sms`.gradestable WHERE `subject_code` = '$bsSubjectCode' AND `student_uid` = '$updid'")->fetch_assoc()['student_achievement'];
     $data = array(
         'status' => 'success',
         'message' => '修改成功',
+        'achievement' => $achievement,
     );
 } else {
     $data = array(

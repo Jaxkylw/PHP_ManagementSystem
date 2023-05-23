@@ -349,7 +349,7 @@ $stu_data = connect_mysql()->query("SELECT * FROM `php_sms`.gradestable WHERE `s
                 },
                 success: function (data) {
                     if (data.status === 'success') {
-                        nowDom.innerHTML = "" + text;
+                        nowDom.innerHTML = "" + data.achievement;
                         nowDom.setAttribute("onclick", "test(this)");
                     } else {
                         alert(data.message);
@@ -378,7 +378,7 @@ $stu_data = connect_mysql()->query("SELECT * FROM `php_sms`.gradestable WHERE `s
                 },
                 success: function (data) {
                     if (data.status === 'success') {
-                        nowDom.innerHTML = "" + text;
+                        nowDom.innerHTML = "" + data.achievement;
                         nowDom.setAttribute("onclick", "test(this)");
                     } else {
                         alert(data.message);
