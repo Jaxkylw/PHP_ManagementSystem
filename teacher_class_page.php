@@ -82,8 +82,8 @@ $stu_data = connect_mysql()->query("SELECT * FROM `php_sms`.gradestable WHERE `s
                                             <?php echo $teacher_name ?>
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-single">
-                                            <a class="dropdown-item" onclick="loginOut()"><i
-                                                        class="fas fa-sign-out-alt text-primary"></i>登出</a>
+                                            <a class="dropdown-item" onclick="loginOut()">
+                                                <i class="text-primary"></i>登出</a>
                                         </div>
                                     </li>
                                 </ul>

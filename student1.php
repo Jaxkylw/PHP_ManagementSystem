@@ -91,7 +91,7 @@ $_SESSION['pri_class'] = $class;
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-single">
                                             <a class="dropdown-item" onclick="loginOut()">
-                                                <i class="fas fa-sign-out-alt text-primary"></i>登出</a>
+                                                <i class="text-primary"></i>登出</a>
                                         </div>
                                     </li>
                                 </ul>

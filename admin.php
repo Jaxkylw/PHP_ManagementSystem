@@ -68,7 +68,7 @@ $admin_username_first = strtoupper(mb_substr($admin_name, 0, 1, 'utf-8'));
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-single">
                                             <a class="dropdown-item" onclick="loginOut()">
-                                                <i class="fas fa-sign-out-alt text-primary"></i>登出</a>
+                                                <i class="text-primary"></i>登出</a>
                                         </div>
                                     </li>
                                 </ul>

@@ -79,9 +79,8 @@ $username_first = strtoupper(mb_substr($username, 0, 1, 'utf-8'));
                                         </a>
                                         <div class="dropdown-menu dropdown-menu-single">
                                             <a class="dropdown-item" href="#">
-                                                <i class="fas fa-user-plus text-primary"></i>录入/修改信息</a>
                                             <a class="dropdown-item" onclick="loginOut()">
-                                                <i class="fas fa-sign-out-alt text-primary"></i>登出</a>
+                                                <i class="text-primary"></i>登出</a>
                                         </div>
                                     </li>
                                 </ul>

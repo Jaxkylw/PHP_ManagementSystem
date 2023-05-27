@@ -73,8 +73,8 @@ $class_data = array_column($class_data, 0);
                                         <?php echo $teacher_name ?>
                                     </a>
                                     <div class="dropdown-menu dropdown-menu-single">
-                                        <a class="dropdown-item" onclick="loginOut()"><i
-                                                    class="fas fa-sign-out-alt text-primary"></i>登出</a>
+                                        <a class="dropdown-item" onclick="loginOut()">
+                                            <i class="text-primary"></i>登出</a>
                                     </div>
                                 </li>
                             </ul>
