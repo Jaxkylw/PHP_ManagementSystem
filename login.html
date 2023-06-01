@@ -130,12 +130,10 @@
                 if (status === 'success') {
                     info.classList.add('alert-success');
                     info.innerHTML = message;
-                    setTimeout(function () {
-                        if (data.permission === 'teacher')
-                            window.location.href = 'teacher.php';
-                        else if (data.permission === 'student')
-                            window.location.href = 'student1.php';
-                    }, 2000);
+                    if (data.permission === 'teacher')
+                        window.location.href = 'teacher.php';
+                    else if (data.permission === 'student')
+                        window.location.href = 'student1.php';
                 } else if (status === 'error') {
                     loading.style.display = 'none';
                     logging.style.display = 'block';

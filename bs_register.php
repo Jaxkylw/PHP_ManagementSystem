@@ -43,7 +43,7 @@ if (isset($_POST['account']) && isset($_POST['password']) && isset($_POST['check
         if (connect_mysql()->query("INSERT INTO `php_sms`.student (`account`, `password`,`name`,`gender`,`create_time`) VALUES ('$account', '$password','$name','$gender',NOW())")) {
             $data = array(
                 'status' => 'success',
-                'message' => ' 注册成功,正在跳转到登录页面2s...',
+                'message' => ' 注册成功,正在跳转到登录页面...',
             );
         } else {
             $data = array(

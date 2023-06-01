@@ -20,7 +20,7 @@ if (isset($_POST['account']) && isset($_POST['password']) && !empty($_POST['acco
         $_SESSION['admin_password'] = $password;
         $data = array(
             'status' => 'success',
-            'message' => '登录成功,正在跳转1s...',
+            'message' => '登录成功,正在跳转',
         );
     } else {
         $data = array(

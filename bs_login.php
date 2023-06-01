@@ -22,7 +22,7 @@ if (isset($_POST['account']) && isset($_POST['password']) && !empty($_POST['acco
         $data = array(
             'status' => 'success',
             'permission' => $permission,
-            'message' => '登录成功,正在跳转2s...',
+            'message' => '登录成功,正在跳转...',
         );
     } else {
         $data = array(

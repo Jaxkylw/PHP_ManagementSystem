@@ -160,9 +160,7 @@
                 if (status === 'success') {
                     info.classList.add('alert-success');
                     info.innerHTML = message;
-                    setTimeout(function () {
-                        window.location.href = "login.html";
-                    }, 2000);
+                    window.location.href = "login.html";
                 } else if (status === 'error') {
                     loading.style.display = "none";
                     logging.style.display = "block";
